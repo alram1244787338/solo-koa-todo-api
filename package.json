@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/alram1244787338/solo-koa-todo-api#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.11.1",
+    "jsonwebtoken": "^9.0.3",
     "koa": "^3.2.1",
     "koa-bodyparser": "^4.4.1",
     "koa-router": "^14.0.0"
