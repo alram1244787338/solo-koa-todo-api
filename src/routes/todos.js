@@ -35,9 +35,13 @@ router.put('/:id', async (ctx) => {
   const userId = ctx.state.userId;
   const { title, content, completed } = ctx.request.body;
 
-  const existing = db.prepare('SELECT * FROM todos WHERE id = ? AND user_id = ?').get(id, userId);
-  if (!existing) {
+  const todo = db.prepare('SELECT * FROM todos WHERE id = ?').get(id);
+  if (!todo) {
     ctx.throw(404, 'Todo not found');
+  }
+
+  if (Number(todo.user_id) !== Number(userId)) {
+    ctx.throw(403, 'Forbidden');
   }
 
   db.prepare(`
@@ -46,13 +50,12 @@ router.put('/:id', async (ctx) => {
         content = COALESCE(?, content),
         completed = COALESCE(?, completed),
         updated_at = CURRENT_TIMESTAMP
-    WHERE id = ? AND user_id = ?
+    WHERE id = ?
   `).run(
     title !== undefined ? title : null,
     content !== undefined ? content : null,
     completed !== undefined ? (completed ? 1 : 0) : null,
-    id,
-    userId
+    id
   );
 
   const updated = db.prepare('SELECT * FROM todos WHERE id = ?').get(id);
@@ -64,12 +67,16 @@ router.delete('/:id', async (ctx) => {
   const id = parseInt(ctx.params.id, 10);
   const userId = ctx.state.userId;
 
-  const existing = db.prepare('SELECT * FROM todos WHERE id = ? AND user_id = ?').get(id, userId);
-  if (!existing) {
+  const todo = db.prepare('SELECT * FROM todos WHERE id = ?').get(id);
+  if (!todo) {
     ctx.throw(404, 'Todo not found');
   }
 
-  db.prepare('DELETE FROM todos WHERE id = ? AND user_id = ?').run(id, userId);
+  if (Number(todo.user_id) !== Number(userId)) {
+    ctx.throw(403, 'Forbidden');
+  }
+
+  db.prepare('DELETE FROM todos WHERE id = ?').run(id);
   ctx.status = 204;
 });
 

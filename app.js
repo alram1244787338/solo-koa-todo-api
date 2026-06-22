@@ -11,7 +11,7 @@ require('./src/db');
 const app = new Koa();
 const router = new Router();
 
-app.use(errorHandler);
+errorHandler(app);
 app.use(bodyParser());
 
 router.get('/', async (ctx) => {
