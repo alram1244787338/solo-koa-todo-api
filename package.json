@@ -1,0 +1,27 @@
+{
+  "name": "work",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alram1244787338/solo-koa-todo-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alram1244787338/solo-koa-todo-api/issues"
+  },
+  "homepage": "https://github.com/alram1244787338/solo-koa-todo-api#readme",
+  "dependencies": {
+    "koa": "^3.2.1",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^14.0.0"
+  }
+}
